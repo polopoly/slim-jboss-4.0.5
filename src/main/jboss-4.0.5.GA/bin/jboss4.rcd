@@ -1,0 +1,43 @@
+#! /bin/sh
+#
+# chkconfig: 345 91 19
+# description: JBoss4
+
+# source function library
+if [ -f /etc/rc.d/init.d/functions ]; then
+    . /etc/rc.d/init.d/functions
+fi
+if [ -f /etc/profile ]; then
+    . /etc/profile
+fi
+jboss=/opt/jboss4
+
+if [ -z $2 ]; then
+    server="default"
+else
+    server="$2"
+fi
+
+start(){
+        echo "Starting jboss server '$server'.."
+        $jboss/bin/run.sh -c "$server" > $jboss/out.log 2> $jboss/err.log &
+}
+
+stop(){
+        echo "Stopping jboss.."
+        $jboss/bin/shutdown.sh -S &
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  *)
+        echo "Usage: jboss {start|stop}"
+        exit 1
+esac
+
+exit 0

@@ -1,0 +1,632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- $Id: readme.html,v 1.1.2.36 2006/05/13 15:42:36 dimitris Exp $ -->
+<html>
+
+<head>
+   <meta content="text/html" http-equiv="content-type"/>
+   <meta content="JBoss Inc." name="author"/>
+   <title>JBoss 4.0.5.GA Readme</title>
+</head>
+
+<body>
+<a href="http://www.jboss.com"><img
+   src='http://www.jboss.org/themes/jbosstheme/img/logo.gif'
+   alt="JBoss Inc."></a>
+
+<h1>JBoss 4.0.5.GA Release Notes</h1>
+
+<p>This is the jboss-4.0.5.GA (final) release for the Java EE&#153; 1.4 codebase. For
+   information on the APIs that make up Java EE 1.4, see <a href='http://java.sun.com/j2ee/1.4/docs/index.html'>
+   Java EE v1.4 Documentation</a>.
+   For a comprehensive tutorial on Java EE 1.4, see <a href='http://java.sun.com/j2ee/1.4/docs/tutorial-update2/doc/index.html'>
+   The Java EE&#153; 1.4 Tutorial</a>.
+   A jboss-4.0.x getting started guide that is based on contents from the tutorial
+   can be found in <a href='http://labs.jboss.com/portal/jbossas/docs'>JBoss Application Server Documentation Library</a></p>
+<p>JBoss releases follow our new <a href="http://wiki.jboss.org/wiki/Wiki.jsp?page=JBossProductVersioning">product versioning rules</a>.</p>
+
+<p>
+   <em>Note: The JBossAS installer allows for arbitrary profiles of the
+      underlying microkernel, including previews of future technologies
+      such as EJB3 which by definition are not Java EE certified.
+      Only the default and all installer profiles with isolation/call by
+      value enabled correspond to Java EE certified profiles.
+   </em>
+</p>
+
+<h2>Overview</h2>
+<ul>
+	<li><a href="#Highlights">Highlights</a></li>
+	<li><a href="#Compatibility">Known Compatibility Issues</a></li>
+	<li><a href="#Configuration">Known Configuration Issues</a></li>
+	<li><a href="#Library Updates">JBoss/Thirdparty Library Updates</a></li>
+	<li><a href="#Details">Detailed Release Notes</a></li>
+	<li><a href="#Documentation">Additional Docs and Help</a></li>
+	<li><a href="#Licenses">Licenses</a></li>
+	<li><a href="#About">About JBoss</a></li>
+</ul>
+
+<h2><a name="Highlights">Highlights</a></h2>
+<ul>
+   <li>With the update to JBossCache 1.4.0.SP1 JBoss now supports scalable Buddy
+	Replication for replicating http sessions. Note that this is *not* the
+	configured default, see
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3297">JBAS-3297</a></li>
+	<li>The new <a href="http://www.jboss.org/wiki/Wiki.jsp?page=JBossWS">JBoss WebServices</a>
+	stack, has been updated to v1.0.3.SP1, see the
+	<a href="http://jira.jboss.com/jira/secure/ConfigureReport.jspa?versions=12310844&sections=.1.7.2.4.6.9.8.3.5&style=text&selectedProjectId=12310050&reportKey=pl.net.mamut:releasenotes&Next=Next">
+	release notes</a>.</li>
+	<li>The EJB3 RC9+ preview has been updated to match the current proposed
+	final draft. The <a href='http://www.jboss.com/docs/trailblazer'>EJB3 Trailblazer</a>
+	is a good introduction to JBoss/EJB3.</li>
+	<li>The JGroups stack has been configured for improved Failure Detection
+	(FD), <a href="http://jira.jboss.com/jira/browse/JBAS-3004">JBAS-3004</a>.</li>
+	<li>JBossMQ can be configured to support XA Recovery, when used with
+	<a href="http://www.jboss.com/products/transactions">JBoss Transactions</a>
+	(experimental), <a href="http://jira.jboss.com/jira/browse/JBAS-1341">
+	JBAS-1341</a>. Also, scheduled messaged in JBossMQ can now be browsed,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3228">JBAS-3228</a></li>
+	<li>Other JBossMQ fixes,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3620">JBAS-3620</a>,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3468">JBAS-3468</a>,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3631">JBAS-3631</a></li>
+	<li>Keystore passwords for Tomcat connectors can now be encrypted,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3369">JBAS-3369</a>.</li>
+	<li>Added support for advanced security role mapping,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3323">JBAS-3323</a>.</li>
+	<li>
+	<a href="http://wiki.jboss.org/wiki/Wiki.jsp?page=ExternalizeTomcatAuthenticators">Tomcat Authenticators</a> have been externalized, to allow integration with
+	3rd-party identity management solutions.</li>
+	<li>Datasource connections can be validated in the background,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-1241">JBAS-1241</a>, and
+	connection pools can be pre-filled,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-1466">JBAS-1466</a>.</li>
+	<li>Access control for coarse grained operations (attribute set, operation
+	invocations) for the JMX console,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3311">JBAS-3311</a>.</li>
+	<li>EAR applications can now specify the exact order of sub-module
+	deployment, rather than rely in implicit ordering,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-2904">JBAS-2904</a>.</li>
+	<li>HiLoKeyGenerator can now be used in a clustered setup,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3266">JBAS-3266</a>.</li>
+	<li>JNDIView MBean now shows the ENC of deployed web applications,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3547">JBAS-3547</a>.</li>
+	<li>A couple of fixes related to memory leaks,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3428">JBAS-3428</a>,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3710">JBAS-3710</a>.</li>
+	<li>If you are using XMBean persistence, you can now persist custom types,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3463">JBAS-3463</a>.</li>
+</ul>
+<p>Plus more than 90 bug fixes, see the <a href="#Details">Detailed Release Notes</a>
+section for the full details.</p>
+<h2><a name="Compatibility">Compatibility Issues</a></h2>
+This lists the changes that could affect compatibility.<ul>
+   <li>JBoss v4.0.5.GA is the first version to be tested against the BEA JRockit
+	java 1.4.2 JVM. Traditionally the jboss testsuite was run against the Sun
+	JVM, but now we test both Sun and JRockit VMs. See
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3598">JBAS-3598</a>.</li>
+    <li>JBoss Cache 1.4.0.SP1, included with JBoss 4.0.5.GA, may not be fully interoperable
+    with the JBossCache 1.2.4.SP2, included in JBoss 4.0.4.GA. The cause of this problem is
+    the serialVersionUID for org.jboss.cache.ReplicationException that changed between
+    JBossCache 1.2.4.SP2 and 1.4.0.SP1. You can work around this issue by upgrading JBossCache
+    in JBoss 4.0.4.GA to JBossCache 1.4.0.GA. JBossCache 1.4.0.GA is certified to work with JBoss 4.0.4.GA.  See
+    <a href="http://jira.jboss.com/jira/browse/JBAS-3772">JBAS-3772</a> for more information.
+    This issue may also be present with JBoss 4.0.3SP1 and earlier.  The same workaround applies,
+    but also requires that jboss-serialization.jar (JBoss Serialization 1.0.3.GA) be added to the server/*/lib directory.</li>
+	<li>The web container is now configured by default to abort any active
+	transactions at the end of a request. This is the Java EE specified
+	behavior, but it can be turned-off, if necessary,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3242">JBAS-3242</a>.</li>
+	<li>Our implementation of javax.management.timer.Timer (when running under
+	jdk1.4) now supports fixed-delay periodic execution in addition to
+	fixed-rate, and this is now the default (<a href="http://jira.jboss.com/jira/browse/JBAS-3281">JBAS-3281</a>)
+	for the JMX timer. This affects the schedule manager (<a href="http://jira.jboss.com/jira/browse/JBAS-3282">JBAS-3282</a>)
+	and the TimerService (<a href="http://jira.jboss.com/jira/browse/JBAS-3391">JBAS-3391</a>
+	that now have an additional FixedRate attribute to establish the old
+	fixed-rate behavior.</li>
+	<li>The EJB3 preview has been updated to match the current EJB3 draft. See
+	<a href='http://www.jboss.com/wiki/Wiki.jsp?page=EJB3'>EJB3 Wiki</a> for a
+      list of the documented issues.</li>
+	<li>The dependency on dom4j.jar from the core jboss libs was replaced by a
+	jarjar'ed equivalent (see
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3666">JBAS-3666</a>) and
+	dom4j.jar has been removed from JBOSS_HOME/lib. It now lives in the server/default|all/lib
+	directory where it can be upgraded by the user, if necessary.</li>
+	<li>The update to jgroups v2.2.7.SP1 provides the ability to set
+	TCP_NO_DELAY on tcp sockets to improve RCP call latency over a tcp
+	configuration, <a href="http://jira.jboss.com/jira/browse/JBAS-3711">
+	JBAS-3711</a>, <a href="http://jira.jboss.com/jira/browse/JBAS-3712">
+	JBAS-3712</a>. Note also that jgroups system properties are now grouped
+	under the jgroups name,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3649">JBAS-3649</a>.</li>
+	<li>If connecting to an LDAP server, those fixes should be relevant,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3649">JBAS-3649</a>,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3438">JBAS-3438</a>,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3645">JBAS-3645</a>,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3653">JBAS-3653</a>.</li>
+</ul>
+<h2><a name="Configuration">Configuration Issues</a></h2>This lists the changes that could affect configuration.<ul>
+	<li>The JBossAS distributions now include the installer (.jar), the sources
+	(.tar.gz) and the canonical binary release (.zip). Unzipping the binary
+	distribution (.zip) with a native unzip utility will restore correctly the
+	executable permission in the /bin/*.sh files. However, unzipping using the
+	JDK jar utility ignores the executable bit, so this need to be set manually.</li>
+	<li>The -server flag is not supported by the IBM JVM, so it now
+	conditionally set by the run.sh/run.bat scripts,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3458">JBAS-3458</a>.</li>
+	<li>If you are on HP-UP, check out the changes in bin/jboss_init_hpux.sh
+	because it has been updated,
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3641">JBAS-3641</a>.</li>
+	<li>You can now start bin/run.sh in the background and stop the jboss JVM by
+	sending a signal to the parent run.sh process, see
+	<a href="http://jira.jboss.com/jira/browse/JBAS-3748">JBAS-3748</a>.</li>
+</ul>
+<p>Note that as of the 4.0.1 release, the distributed configurations have
+   switched back to the 3.2.x types of distribution configurations:</p>
+<ul>
+   <li>minimal: a minimal microkernel with logging, JNDI and hot deployment
+      support</li>
+   <li>default: a base level Java EE 1.4 application server configuration</li>
+   <li>all: a full Java EE 1.4 server configuration with clustering and all
+      optional services</li>
+</ul>
+
+<p>The standard configuration from the 4.0.0-4.0.1RC1 releases has been dropped
+   and the default flat class loading model from 3.0.x-3.2.x has been restored
+   for
+   the default configuration. This change in behavior was done to restore
+   consistency with the 3.2.x class loading model. The 4.0.0 scoped class
+   loading
+   behavior and call by value JNDI lookup behavior can be restored by:
+</p>
+<ol>
+   <li> Editing conf/jboss-service.xml and setting the NamingService CallByValue
+      to true:
+      <pre>
+         &lt;mbean code="org.jboss.naming.NamingService"
+         name="jboss:service=Naming"&gt;
+         &lt;!-- The call by value mode. true if all lookups are unmarshalled
+         using
+         the caller's TCL, false if in VM lookups return the value by reference.
+         --&gt;
+         <b>&lt;attribute name="CallByValue"&gt;true&lt;/attribute&gt;</b>
+         &lt;!-- The listening port for the bootstrap JNP service. Set this to
+         -1
+         to run the NamingService without the JNP invoker listening port.
+         --&gt;
+         ...
+         &lt;/mbean&gt;</pre>
+   </li>
+
+   <li>Editing the deploy/ear-deployer.xml and setting the Isolated and
+      CallByValue attribute to true:
+   <pre>
+      &lt;server&gt;
+      &lt;!-- EAR deployer, remove if you are not using ear deployments --&gt;
+      &lt;mbean code="org.jboss.deployment.EARDeployer"
+      name="jboss.j2ee:service=EARDeployer"&gt;
+      &lt;!-- A flag indicating if ear deployments should have their own scoped
+      class loader to isolate their classes from other deployments.
+      --&gt;
+      &lt;attribute name="Isolated"&gt;true&lt;/attribute&gt;
+      &lt;!-- A flag indicating if the ear components should have in VM call
+      optimization disabled.
+      --&gt;
+      &lt;attribute name="CallByValue"&gt;true&lt;/attribute&gt;
+      &lt;/mbean&gt;
+      &lt;/server&gt;</pre>
+</ol>
+
+<h2><a name="Library Updates">Library Updates</a></h2>
+<h3>JBoss Library Updates</h3>
+<ul>
+	<li>hibernate, upgraded to v3.2.0.GA (from v3.2.0.CR2)</li>
+	<li>hibernate-annotations upgraded to v3.2.0.GA (from v3.2.0.CR1)</li>
+	<li>hibernate-entitymanager upgraded to v3.2.0.GA (from v3.2.0.CR1)</li>
+	<li>javassist, upgraded to v3.3.0.GA (from v3.2.0.CR2)</li>
+	<li>jboss-aop, upgraded to v1.5.2.GA (from v1.5.1.GA)</li>
+	<li>jboss-cache, upgraded to v1.4.0.SP1 (from v1.2.4.SP2)</li>
+	<li>jboss-common, upgraded to v1.0.0.GA (from v1.0.0.CR1)</li>
+	<li>jboss-retro-rt, upgraded to v1.0.3.GA (from v1.0.0.GA)</li>
+	<li>jboss-serialization, upgraded to v1.0.3.GA (from v1.0.0.GA)</li>
+	<li>jbossws, upgraded to 1.0.3.SP1 (from v1.0.0.GA)</li>
+	<li>jbossxb, upgraded to 1.0.0.CR6 (from v1.0.0.CR4)</li>
+	<li>jgroups, upgraded to v2.2.7.SP1 (from v2.2.7)</li>
+</ul>
+<h3>Thirdparty Library Updates</h3>
+<ul>
+	<li>apache-beanutils, upgraded to v1.7.0 (from v1.6.0)</li>
+	<li>apache-coded, upgraded to v1.3.0 (from v1.2.0)</li>
+	<li>apache-collections, upgraded to v3.1 (from v2.1)</li>
+	<li>apache-lang, v1.0 removed</li>
+	<li>apache-myfaces, upgraded to v1.1.4 (from v1.1.3)</li>
+	<li>apache-scout, upgrade to v0.7rc2 (from v0.7rc1)</li>
+	<li>apache-tomcat, upgraded to v5.5.20 (from v5.5.17)</li>
+	<li>apache-xmlsec, upgraded to v1.3.0 (from v1.2.97)</li>
+	<li>dom4j, restored to the original v1.6.1 (from v1.6.1jboss)</li>
+	<li>jacorb, upgraded to v2.2.4jboss-patch1 (from v2.2.3)</li>
+	<li>jaxen, upgraded to v1.1-beta-9 (from v1.1-beta4)</li>
+	<li>sun-jaf, upgraded to v1.1 (from v1.0.2)</li>
+	<li>sun-javamail, upgraded to v1.4 (from v1.3.1)</li>
+</ul>
+
+<h1><a name="Details">Detailed Release Notes</a></h1>
+
+<h3>Includes versions: JBossAS-4.0.5.CR1, JBossAS-4.0.5.GA</h3>
+
+<hr/>
+
+<h2>Feature Request</h2>
+<ul>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-397">JBAS-397</a> ] Can't set SERIALIZABLE transaction isolation with Oracle XA </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-1241">JBAS-1241</a> ] ConnectionPools - Background validation required </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-1466">JBAS-1466</a> ] Prefilling Pools </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-1705">JBAS-1705</a> ] Implement getFixedRate() and add fixed-rate notification inTimerMBean, as of JMX1.2 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2144">JBAS-2144</a> ] Scheduled task interval calculated from stop to start instead of start to start </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2283">JBAS-2283</a> ] Custom header based authentication </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2587">JBAS-2587</a> ] ValidConnectionChecker implementation for MS SQL Server </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2609">JBAS-2609</a> ] Investigate bundling of tomahawk, and why it cannot be deployed in a web app </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2904">JBAS-2904</a> ] Allow for ear modules to be deployed in the order that they are declared in application.xml </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3096">JBAS-3096</a> ] Add a maxInactiveInterval concept to ClusteredSingleSignOn </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3115">JBAS-3115</a> ] Extend ValidConnectionChecker semantics to include non JDBC based resources </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3217">JBAS-3217</a> ] add JBOSS_CONF, JBOSS_HOST variables to jboss_init_redhat.sh </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3228">JBAS-3228</a> ] Enable browsing of scheduled messages </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3229">JBAS-3229</a> ] HiLo generator shoudn't always re-create the table at startup </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3266">JBAS-3266</a> ] HiLoKeyGenerator is not cluster-safe </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3290">JBAS-3290</a> ] update myfaces libraries to newest release </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3297">JBAS-3297</a> ] Use Buddy Replication for HttpSession replication </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3311">JBAS-3311</a> ] Access Control on JMX Operations in the JMX Console </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3323">JBAS-3323</a> ] Role Mapping Login Module that maps application role to declarative role </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3369">JBAS-3369</a> ] Add support for encrypting the tomcat server.xml keystore/truststore attributes </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3391">JBAS-3391</a> ] Add FixedRate setting to org.jboss.monitor.services.TimerService (used to configure JMX Timers) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3395">JBAS-3395</a> ] ValidConnectionChecker for IBM DB2 AS400 environment </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3466">JBAS-3466</a> ] JMS PersistenceManager: org.jboss.mq.SpyJMSException: Could not remove message when using MySQL DB </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3506">JBAS-3506</a> ] Maintain the server logs for the different testsuite clustering configs </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3547">JBAS-3547</a> ] Display ENC for web applications in JNDIView </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3575">JBAS-3575</a> ] Standalone server configuration for HA-JMS </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3731">JBAS-3731</a> ] The default ServiceBindingManager's sample bindings file should override JBoss Messaging's Connector configuration </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3748">JBAS-3748</a> ] Allow bin/run.sh to run in the background and stop jboss, when stopped. </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3750">JBAS-3750</a> ] log of JMS LinkedException when handling provider failure </li>
+</ul>
+<h2>Bug</h2>
+<ul>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-841">JBAS-841</a> ] SQLUtil.fixConstraintName broken </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-940">JBAS-940</a> ] Unecessary alias in SQL </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-1322">JBAS-1322</a> ] Farm service fails to deploy correctly on startup </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-1761">JBAS-1761</a> ] Clustering unit test failures </li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-2182">JBAS-2182</a> ] JBoss doesn't support overloaded methods in SEIs
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-2950">JBAS-2950</a> ] HAPartition starts successfully even if state transfer fails
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3178">JBAS-3178</a> ] Fix oid-sorting in the snmp-adaptor
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3180">JBAS-3180</a> ] Broken MBean operation ServerInfo#displayInfoForClass(String)
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3194">JBAS-3194</a> ] Proxies for HAServiceMBeanSupport subclass unbound across cluster when any instance undeployed
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3210">JBAS-3210</a> ] DynamicLoginConfig service fails to load login-config.xml that may be absolute
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3212">JBAS-3212</a> ] Externalized Tomcat Authenticators not compiled in
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3214">JBAS-3214</a> ] Fresh 4.0.4GA/EJB3 install fails to boot because server/default/conf/jboss-service.xml is missing
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3216">JBAS-3216</a> ] PooledInvokerProxy.getPooledConnection() is not threadsafe
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3219">JBAS-3219</a> ] Error on lookup From a clustered SLSB to another clustered SLSB
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3220">JBAS-3220</a> ] ejb3.deployer lost the javassit bytecode provider changes
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3223">JBAS-3223</a> ] NullPointerException thrown in BadAttributeValueExpException.toString
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3225">JBAS-3225</a> ] Installer doesn't contain srp libraries
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3227">JBAS-3227</a> ] JNDIView.getHAJndiAttributes NPE
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3239">JBAS-3239</a> ] Input stream reads binary from the db is closed twice
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3242">JBAS-3242</a> ] EE spec requires that web container aborts any active txn at the end of a request
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3246">JBAS-3246</a> ] Run.bat displays periods instead of blank lines
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3258">JBAS-3258</a> ] JDBC artificats should throw SQLException when already closed
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3260">JBAS-3260</a> ] JNDI-View.list() throws NPE
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3271">JBAS-3271</a> ] Memory leak on org.jboss.deployment.SimpleSubDeployerSupport
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3279">JBAS-3279</a> ] Authenticated user can bypass declarative role checks for servlets
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3281">JBAS-3281</a> ] javax.management.timer.Timer should perform fixed-delay periodic execution by default
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3282">JBAS-3282</a> ] ScheduleManager MBean uses fixed-rate execution on Java 1.4 and fixed-delay execution on Java 5.0
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3287">JBAS-3287</a> ] Credential object typing is not consistent
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3296">JBAS-3296</a> ] SpyObjectMessage loses original cause of exception when message payload has non-serializable fields
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3310">JBAS-3310</a> ] Remotely initiated sessions are not cleared from the JBoss Cache upon expiration
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3312">JBAS-3312</a> ] LdapExtLoginModule is missing the first role group of a nested structure
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3313">JBAS-3313</a> ] Static logger initializer incorrectly using DomainSocketFactory in ClientSocketFactory, causing ClassNotFoundException on client side.
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3318">JBAS-3318</a> ] Secondary http sessions in a cross-context request are not replicated
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3320">JBAS-3320</a> ] Web services JBWS309 test failing as jboss-bean.deployer is not included in the custom server
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3328">JBAS-3328</a> ] HiLoKeyGenerator.generateKey is not thread-safe
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3336">JBAS-3336</a> ] Destroy connections after a ResourceManager failure
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3341">JBAS-3341</a> ] Entity container is not ready after its startService
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3347">JBAS-3347</a> ] commons-logging 1.0.5.GA-jboss broke log4j %C pattern format
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3354">JBAS-3354</a> ] Attachment tests (as testsuite) fail on unix platforms (solaris and linux tested)
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3358">JBAS-3358</a> ] Work directory for the web app shouldn't be deleted on Context Destroy
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3360">JBAS-3360</a> ] No ability to override CMD_STOP in JBOSS_HOME/bin/jboss_init_redhat.sh
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3362">JBAS-3362</a> ] Foreign key index is created on the wrong table
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3367">JBAS-3367</a> ] NPE in SimpleSubDeployerSupport.unregisterClassLoader(), during destroy(DeploymentInfo)
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3370">JBAS-3370</a> ] Bug in XA Recovery implementation: java.sql.SQLException: ORA-00932: inconsistent datatypes: expected BLOB got NUMBER
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3381">JBAS-3381</a> ] The
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3392">JBAS-3392</a> ] JBossSocketFactory should flag absence of securityDomain
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3394">JBAS-3394</a> ] ejb3 installer has bindingservice-plugin.jar missing
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3396">JBAS-3396</a> ] PooledInvokerHA returning java.rmi.MarshalledObject
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3421">JBAS-3421</a> ] AcceptNonWarDirs attribute of AbstractWebContainerMBean not exposed for .war deployer
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3428">JBAS-3428</a> ] org.jboss.ejb.SecurityActions.getMBeanProxy duplicating proxies
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3431">JBAS-3431</a> ] AuthorizationInterceptor throwing ArrayIndexOutOfBoundsException
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3438">JBAS-3438</a> ] LdapExtLoginModule does not handle roles containing '/' correctly
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3439">JBAS-3439</a> ] DelegatingPolicy: preload of ContextPolicy required for jrockit
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3448">JBAS-3448</a> ] LdapExtLoginModule can leak connections
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3454">JBAS-3454</a> ] Unable to set negative values for MBean attributes using Twiddle command
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3458">JBAS-3458</a> ] Out of synch run.bat/run.sh, hotspot -server usage
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3463">JBAS-3463</a> ] Loading of persisted XMBean attributes does not work for custom types
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3468">JBAS-3468</a> ] JMS Connection starts ping thread before ClientID is set resulting in the ClientMonitorInterceptor to close the connection after client timeout
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3471">JBAS-3471</a> ] Shutdown of 'jbossws14.sar#jbossws.beans' produces WARNing
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3483">JBAS-3483</a> ] The javadoc relating to StdServerSessionPool pooling parameters is wrong
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3484">JBAS-3484</a> ] non portable JDK dependant clasess (sun.**)
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3485">JBAS-3485</a> ] Test failure - org.jboss.test.web.test.WebIntegrationUnitTestCase
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3486">JBAS-3486</a> ] Unable to find deployment resources - org.jboss.test.securitymgr.test.WarPermissionsUnitTestCase
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3488">JBAS-3488</a> ] Test failure - org.jboss.test.compatibility.test.SerialVersionUIDUnitTestCase
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3489">JBAS-3489</a> ] Test failure - org.jboss.test.aop.test.ScopedUnitTestCase
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3490">JBAS-3490</a> ] Test failure - org.jboss.test.aop.test.ObservableUnitTestCase
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3491">JBAS-3491</a> ] Test failure - org.jboss.test.webservice.samples.ServerSideJMSTestCase
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3503">JBAS-3503</a> ] Clustering testbeancluster test failures - Deployment Error
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3513">JBAS-3513</a> ] adding
+<distributable>to webapp's web.xml causes ERROR on startup in default server profile
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3517">JBAS-3517</a> ] Redeploy of Tomcat5 Service chokes with RuntimeException
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3528">JBAS-3528</a> ] HttpSession isNew() inaccurate if the 2nd request for the session is on different server
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3541">JBAS-3541</a> ] JDBCParameterSetter is not used for query parameters
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3545">JBAS-3545</a> ] HASessionState state transfer incorrect for replicated sessions
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3555">JBAS-3555</a> ] LdapExtLoginModule fails if no initial bind credentials are supplied but anonymous login would be possible
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3558">JBAS-3558</a> ] Service(Proxy) should be transient in ServiceContext
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3561">JBAS-3561</a> ] InvokerInterceptor.invokeLocalMarshalled is not marshalling PayLoad and invocationContext
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3566">JBAS-3566</a> ] Invalid mbean code reference in mssql-jdbc2-service.xml
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3573">JBAS-3573</a> ] Failure to remove a message should result in a NACK + error
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3584">JBAS-3584</a> ] WARNing logged when deploy-hasingleton is undeployed twice
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3585">JBAS-3585</a> ] Duplicate undeployment of unpacked nested modules on jboss shutdown
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3618">JBAS-3618</a> ] repository-zip target in build-release.xml doesn't consistently overwrite default config with all
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3619">JBAS-3619</a> ] Deadlock in AsynchViewChangeHandler
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3620">JBAS-3620</a> ] JBossMQ's PersistenceManager RecoveryRetries doesn't work if failure is creating the schema
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3631">JBAS-3631</a> ] Missing branch in StdServerSession commit logic
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3640">JBAS-3640</a> ] Clustering of the quartz-ra.rar failes
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3642">JBAS-3642</a> ] Flag an exception in CachedConnectionValve if CachedConnectionManager is unavailable
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3645">JBAS-3645</a> ] LdapExtLoginModule still has connection leak
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3653">JBAS-3653</a> ] Ldap*LoginModule fail to retrieve multiple role names when roleAttributeIsDN=true
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3684">JBAS-3684</a> ] References to TxManager
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3685">JBAS-3685</a> ] References to TxManager
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3702">JBAS-3702</a> ] Uncomment HA invokers in sample-bindings.xml
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3705">JBAS-3705</a> ] Fixes included in JBAS-3689 for allowing the NamingService to work correctly in multi-homed environments need to be incorporated.
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3710">JBAS-3710</a> ] WebServices leaking redeployment
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3713">JBAS-3713</a> ] Full MBean lifecycle for HAPartition doesn't work
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3717">JBAS-3717</a> ] correct TCL should be used before starting entity PMs
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3722">JBAS-3722</a> ] on Windows, org.jboss.test.naming.test.SimpleUnitTestCase fail
+</li>
+<li>[ <a href="http://jira.jboss.com/jira/browse/JBAS-3727">JBAS-3727</a> ] NPE on context classloader changing in EJB container when caller doesn't have a context classloader
+</li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3736">JBAS-3736</a> ] JBoss AS 4.0.5.CR1 does not include jaxen, which is required for using Hibernate XML mapping </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3737">JBAS-3737</a> ] On Windowsm, jmx.test.DeployServiceUnitTestCase fails with DeploymentException </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3738">JBAS-3738</a> ] On Windows: timer.test.BasicTimerUnitTestCase fails </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3742">JBAS-3742</a> ] Can't use . in username when using BaseCertLoginModule </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3743">JBAS-3743</a> ] Wrong SQL in oracle-jdbc2-service.xml example </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3744">JBAS-3744</a> ] UseJK is not displayed correctly in jmx-console (for case 11730). </li>
+</ul>
+<h2>Patch</h2>
+<ul>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3478">JBAS-3478</a> ] Make jsse provider pluggable in testsuite </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3683">JBAS-3683</a> ] snmp-adaptor.sar/attributes.mib MIB syntax errors </li>
+</ul>
+<h2>Task</h2>
+<ul>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-1341">JBAS-1341</a> ] XA Recovery </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-1477">JBAS-1477</a> ] Pass in the security-domain name to the login modules for error reporting </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2398">JBAS-2398</a> ] Check for unparameterized interface configuration </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2654">JBAS-2654</a> ] Validate Hosts defined under a tomcat service </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2899">JBAS-2899</a> ] Externalize Tomcat Authenticators at the Host Level </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3004">JBAS-3004</a> ] Use a combination of FD and FD_SOCK in the default JGroups protocol stack. </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3116">JBAS-3116</a> ] JCA Exception Sorting/Valid Connection checking needs test coverage </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3150">JBAS-3150</a> ] Cipher attribute in the SSL Connector is ignored </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3204">JBAS-3204</a> ] Seperate the joesnmp.jar library from the snmp-support.jar </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3218">JBAS-3218</a> ] Handle expiration of replicated sessions found in the buddy replication subtree </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3235">JBAS-3235</a> ] Remove test dependency on com.sun.net.ssl.internal.ssl.Provider </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3243">JBAS-3243</a> ] Use PojoCache instead of TreeCacheAop in HttpSession replication code </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3244">JBAS-3244</a> ] Get rid of CredentialUpdater thread from TreeCacheSSOClusterManager </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3251">JBAS-3251</a> ] Investigate org.jboss.test.jca.test.SecurityContextUnitTestCase </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3252">JBAS-3252</a> ] jacorb.properties - wrong names for connection timeouts </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3284">JBAS-3284</a> ] Upgrade jboss serialization to 1.0.1.GA (from 1.0.0.GA) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3285">JBAS-3285</a> ] Upgrade EJB3 to 1.0.0.CR8 (from CR7) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3286">JBAS-3286</a> ] ExtendedFormAuthenticator should override authenticate to populate session </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3288">JBAS-3288</a> ] Remove JAXB1.0 API classes (javax.xml.bind.*) from jboss-j2ee.jar </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3298">JBAS-3298</a> ] Upgrade JBossCache to 1.4.0 in Branch 4.0 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3299">JBAS-3299</a> ] Release jbossws-1.0.1.GA binary </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3306">JBAS-3306</a> ] Upgrade JBoss AS to use MyFaces 1.1.3 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3319">JBAS-3319</a> ] dependency on jboss.ha:service=HASingletonDeployer,type=Barrier should read <depends> </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3371">JBAS-3371</a> ] Replace Sun activation.jar with a source-code friendly licensed implementation </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3372">JBAS-3372</a> ] Replace Sun javamail (mail.jar) with a source-code friendly licensed implementation </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3422">JBAS-3422</a> ] DynamicLoginConfig Service should not load conf/login-config.xml </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3434">JBAS-3434</a> ] Produce the Installer for 4.0.5.GA </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3435">JBAS-3435</a> ] Get the 4.0.5.CR1 testsuite passing </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3436">JBAS-3436</a> ] Get the 4.0-compatibility tests passing for 4.0.5.CR1 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3443">JBAS-3443</a> ] JBossCacheService should not hold a direct ref to TreeCache service bean </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3446">JBAS-3446</a> ] Upgrade JBossSerialization to 1.0.2.GA </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3461">JBAS-3461</a> ] Resolve the failures in the ClusteredSSO unit tests </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3472">JBAS-3472</a> ] Upgrade jacorb to 2.2.4jboss.patch1 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3476">JBAS-3476</a> ] Create the release notes for 4.0.5.CR1 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3487">JBAS-3487</a> ] Create test of ClusteredSingleSignOn with BR enabled </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3492">JBAS-3492</a> ] Test Failure with JRockit: org.jboss.test.exception.EntityExceptionUnitTestCase </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3494">JBAS-3494</a> ] failure in org.jboss.test.classloader.test.BasicLoaderUnitTestCase </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3496">JBAS-3496</a> ] all tests under org.jboss.test.cmp2.cmrtree.test fail with javax.ejb.DuplicateKeyException </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3497">JBAS-3497</a> ] (21) test under org.jboss.test.cmp2.lob fail with javax.ejb.ObjectNotFoundException (jrockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3504">JBAS-3504</a> ] Upgrade to JBoss Cache 1.4.0.SP1 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3522">JBAS-3522</a> ] Include jbossws-1.0.3 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3554">JBAS-3554</a> ] Upgrade JBoss AS to use MyFaces 1.1.4 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3574">JBAS-3574</a> ] Upgrade jbossws to 1.0.3.GA </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3578">JBAS-3578</a> ] Error in org.jboss.test.cluster.jmx.test.HAInvokerUnitTestCase </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3579">JBAS-3579</a> ] Failure in org.jboss.test.web.test.ClusteredSingleSignOnUnitTestCase(tomcat-sso-cluster) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3580">JBAS-3580</a> ] Error in org.jboss.test.jbossmq.test.UnackedUnitTestCase </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3586">JBAS-3586</a> ] Upgrade Tomcat to Version 5.5.18 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3592">JBAS-3592</a> ] Add system property jgroups.mcast.ip_ttl </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3593">JBAS-3593</a> ] Add a Marshaller to HAPartitionImpl </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3598">JBAS-3598</a> ] Get the 4.0.5.GA testsuite-1.4 (JRockit) passing </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3601">JBAS-3601</a> ] Switch copyright to RedHat Middleware LLC </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3625">JBAS-3625</a> ] Update EJB3 for jboss-4.0.5.GA </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3634">JBAS-3634</a> ] Acknowledgement of transacted message in MessageListener should be inside delivery lock </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3641">JBAS-3641</a> ] Updated bin/jboss_init_hpux.sh script </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3649">JBAS-3649</a> ] Startup switches should set the new JGroups system properties </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3651">JBAS-3651</a> ] Get the jboss-4.0-testsuite-sun-1.4 passing on Solaris 10 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3652">JBAS-3652</a> ] Add EULA to licenses folder of distribution </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3655">JBAS-3655</a> ] Reduce logging for the construction of interceptor in ModelMBeanInvoker </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3656">JBAS-3656</a> ] Disconnect HAPartition channel upon failure in startService() </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3659">JBAS-3659</a> ] Increase ClusterPartition buffers to support farming of large files </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3665">JBAS-3665</a> ] Update JBoss Serialization to 1.0.3.GA </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3666">JBAS-3666</a> ] Replace the dom4j dependency with a jarjar'ed equivalent </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3676">JBAS-3676</a> ] Upgrade jboss-common to 1.0.0.GA </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3682">JBAS-3682</a> ] Upgrade jboss aop to 1.5.2.GA </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3687">JBAS-3687</a> ] Test case for Custom Principal Propagation </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3699">JBAS-3699</a> ] Fix testsuite OOMEs </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3711">JBAS-3711</a> ] Update to JGroups 2.2.7.SP1 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3712">JBAS-3712</a> ] Use TCP_NO_DELAY on sockets if HAPartition uses TCP </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3740">JBAS-3740</a> ] Upgrade Hibernate/JPA to 3.2.0.GA </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3741">JBAS-3741</a> ] Upgrade tomcat to 5.5.20 </li>
+</ul>
+<h2>Sub-task</h2>
+<ul>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2071">JBAS-2071</a> ] Need a mechanism to retrieve FamilyClusterInfo in a consistent/synchronized way </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2225">JBAS-2225</a> ] FCI.getTargets() should be Immutable </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBINSTALL-74">JBINSTALL-74</a> ] German translation </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2272">JBAS-2272</a> ] Clustering unit test failures - TCP stack </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2409">JBAS-2409</a> ] EJB3 JMS Integration </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-2481">JBAS-2481</a> ] Externalization of the tomcat authenticators </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3264">JBAS-3264</a> ] Write a helper class that retrieves an XAResource from the jms provider api suitable for use in recovery </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3270">JBAS-3270</a> ] XID and hashmap </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3386">JBAS-3386</a> ] Expose "in process" messages via JMX </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3464">JBAS-3464</a> ] Add a wiki page explaining the implication of buddy replication for ClusteredSSO </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3482">JBAS-3482</a> ] Still a WARN message during failed close </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3510">JBAS-3510</a> ] Backport fixes from ServiceController rewrite to JBoss4 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3525">JBAS-3525</a> ] Remove redundant ERROR logging when clustered webapp is not supported </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3600">JBAS-3600</a> ] failure (jrockit) org.jboss.test.compatibility.test.SerialVersionUIDUnitTestCase </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3602">JBAS-3602</a> ] 3 failing tests org.jboss.test.jacc.test (jrockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3603">JBAS-3603</a> ] 6 failing tests org.jboss.test.jca.test.XATxConnectionManagerUnitTestCase (jrockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3604">JBAS-3604</a> ] 2 failed tests - org.jboss.test.jmx.test.DeployXMBeanUnitTestCase (jrockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3605">JBAS-3605</a> ] test failures org.jboss.test.jmx.test.JMXInvokerUnitTestCase/SecureJMXInvokerUnitTestCase (jrockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3606">JBAS-3606</a> ] failed org.jboss.test.naming.test.SecurityUnitTestCase (jrockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3607">JBAS-3607</a> ] failing org.jboss.test.session.test.EjbRemoveUnitTestCase (jrockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3608">JBAS-3608</a> ] 2 failing tests org.jboss.test.webservice.handlerflow.HandlerFlowTestCase </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3609">JBAS-3609</a> ] failing org.jboss.test.webservice.jbws70.JBWS70TestCase (jrockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3627">JBAS-3627</a> ] Write test to test rollback of a NACK in 2PC </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3628">JBAS-3628</a> ] Invalid fix for JBAS-3573 </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3693">JBAS-3693</a> ] Other XAResource errors </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3715">JBAS-3715</a> ] 1 failing test in org.jboss.test.security.test.SRPLoginModuleUnitTestCase (rockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3716">JBAS-3716</a> ] failed org.jboss.test.security.test.JaasSecurityManagerUnitTestCase (jrockit) </li>
+<li> [ <a href="http://jira.jboss.com/jira/browse/JBAS-3734">JBAS-3734</a> ] Cannot use the classloader being null to detect whether beforeDelivery was invoked </li>
+</ul>
+
+
+<h2><a name="Documentation">Documentation and Help</a></h2>
+Documentation and help may be obtained from the JBoss site.
+<ul>
+   <li><a href="http://labs.jboss.com/portal/jbossas/docs">JBoss AS Documentation</a></li>
+   <li><a href="http://wiki.jboss.org/">JBoss Wiki</a></li>
+   <li><a href="http://jira.jboss.org/">JBoss JIRA</a></li>
+   <li><a href="http://www.jboss.org/index.html?module=bb">JBoss Forums</a></li>
+</ul>
+
+<h2><a name="Licenses">Licenses</a></h2>
+
+<p>JBoss is licensed under the LGPL. The licence texts for JBoss and the
+   thirdparty components it uses may be found in the docs/licenses directory of the distribution.
+   <a href="docs/licenses">Browse Licences</a>
+</p>
+
+<h2><a name="About">About JBoss, a division of RedHat</a></h2>
+
+<p>JBoss, a division of RedHat, is in the business of providing superior technical support
+   to our customers. Our goal is to make Professional Open Source&#153; the <b>SAFE
+   CHOICE</b>
+   for you. We accomplish this by backing up our open source Java products
+   with technical support services that are delivered by the core
+   developers themselves. We can help you to train your staff and provide
+   you with support at every stage of the application lifecycle - from
+   development and integration through deployment and maintenance. Visit
+   the <a href="http://www.jboss.org/services/index">JBoss Services</a>
+   page for more information.
+</p>
+
+</body>
+</html>

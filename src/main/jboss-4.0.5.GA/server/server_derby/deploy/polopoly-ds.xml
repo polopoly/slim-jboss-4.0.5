@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+The Derby embedded database JCA connection factory config
+$Id: derby-ds.xml,v 1.1.4.1 2004/11/03 13:28:39 loubyansky Exp $
+-->
+<datasources>
+  <local-tx-datasource>
+    <jndi-name>jdbc/PolopolyDB</jndi-name>
+    <connection-url>jdbc:derby:${jboss.server.data.dir}${/}derby${/}PolopolyDB;create=true</connection-url>
+    <driver-class>org.apache.derby.jdbc.EmbeddedDriver</driver-class>
+
+    <exception-sorter-class-name>com.polopoly.resource.adapter.jdbc.GenericExceptionSorter</exception-sorter-class-name>
+
+    <min-pool-size>5</min-pool-size>
+    <max-pool-size>50</max-pool-size>
+    <idle-timeout-minutes>5</idle-timeout-minutes>
+
+    <track-statements />
+
+  </local-tx-datasource>
+</datasources>
