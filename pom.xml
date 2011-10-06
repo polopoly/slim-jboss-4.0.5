@@ -7,6 +7,31 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <name>Slim JBoss 4.0.5.GA</name>
+  <description>A slimmed down jboss prepared to run Polopoly</description>
+  <url>http://github.com/polopoly/slim-jboss-4.0.5</url>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/polopoly/slim-jboss-4.0.5.git</connection>
+    <developerConnection>scm:git:git@github.com:polopoly/slim-jboss-4.0.5.git</developerConnection>
+  </scm>
+
+  <distributionManagement>
+    <repository>
+      <id>polopoly-product</id>
+      <name>Polopoly Product</name>
+      <url>http://maven.polopoly.com/nexus/content/repositories/polopoly-product</url>
+    </repository>
+  </distributionManagement>
+
   <build>
     <plugins>
       <plugin>
