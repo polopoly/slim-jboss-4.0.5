@@ -152,16 +152,6 @@ if $cygwin; then
     JBOSS_ENDORSED_DIRS=`cygpath --path --windows "$JBOSS_ENDORSED_DIRS"`
 fi
 
-# Custom options
-JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=10080 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.util.logging.config.file=$JBOSS_HOME/bin/polopoly-logging.properties"
-
-# Configure Solr
-# If your JBoss is configured with an external containers.dir, you need to update
-# this to reflect the correct path to ${polopoly.dir}/work/solr.
-JAVA_OPTS="$JAVA_OPTS -Dsolr.solr.home=$JBOSS_HOME/../../work/solr"
-
-#JAVA_OPTS="$JAVA_OPTS -agentlib:yjpagent=port=10081"
-
 # Display our environment
 echo "========================================================================="
 echo ""

@@ -1,6 +1,0 @@
-----------------------------------------------------------------
-2009-10-29 20:00:05.404 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance a816c00e-0124-a1e2-2ec0-00000216fa98
-on database directory /home/pra/src/polopoly/git/RELENG-9-14/dist/dist-root/containers/jboss-4.0.5.GA/server/server_derby/data/derby/PolopolyDB  
-
-Database Class Loader started - derby.database.classpath=''
