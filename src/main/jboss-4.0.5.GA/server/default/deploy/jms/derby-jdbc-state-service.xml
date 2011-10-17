@@ -12,7 +12,7 @@
   <!-- A Statemanager that stores state in the database -->
   <mbean code="org.jboss.mq.sm.jdbc.JDBCStateManager"
 	      name="jboss.mq:service=StateManager">
-       <depends optional-attribute-name="ConnectionManager">jboss.jca:service=DataSourceBinding,name=jdbc/PolopolyDB</depends>
+       <depends optional-attribute-name="ConnectionManager">jboss.jca:service=DataSourceBinding,name=jdbc/MemoryDB</depends>
     <attribute name="SqlProperties">
       CREATE_TABLES_ON_STARTUP = TRUE
       CREATE_USER_TABLE = CREATE TABLE JMS_USERS (USERID VARCHAR(32) NOT NULL, PASSWD VARCHAR(32) NOT NULL, \

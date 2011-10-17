@@ -30,13 +30,6 @@ $Id: ejb-deployer.xml 44342 2006-04-28 13:23:38Z dimitris $
   <!-- A persistence policy that does not persist the timer -->
   <mbean code="org.jboss.ejb.txtimer.NoopPersistencePolicy" name="jboss.ejb:service=EJBTimerService,persistencePolicy=noop"/>
   
-
-  <!-- A persistence policy that persistes timers to a database -->
-  <!--mbean code="org.jboss.ejb.txtimer.DatabasePersistencePolicy" name="jboss.ejb:service=EJBTimerService,persistencePolicy=database">
-    <depends optional-attribute-name="DataSource">jboss.jca:service=DataSourceBinding,name=jdbc/PolopolyDB</depends>
-    <attribute name="DatabasePersistencePlugin">org.jboss.ejb.txtimer.GeneralPurposeDatabasePersistencePlugin</attribute>
-  </mbean-->
-
   <!-- ==================================================================== -->
   <!-- EJB Deployer                                                         -->
   <!-- ==================================================================== -->

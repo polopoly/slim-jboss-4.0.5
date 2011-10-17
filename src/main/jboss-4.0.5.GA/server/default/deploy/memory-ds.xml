@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<datasources>
+  <local-tx-datasource>
+    <jndi-name>jdbc/MemoryDB</jndi-name>
+    <connection-url>jdbc:derby:memory:MemoryDB;create=true</connection-url>
+    <driver-class>org.apache.derby.jdbc.EmbeddedDriver</driver-class>
+
+    <exception-sorter-class-name>com.polopoly.resource.adapter.jdbc.GenericExceptionSorter</exception-sorter-class-name>
+
+    <min-pool-size>5</min-pool-size>
+    <max-pool-size>50</max-pool-size>
+    <idle-timeout-minutes>5</idle-timeout-minutes>
+
+    <track-statements />
+
+  </local-tx-datasource>
+</datasources>
