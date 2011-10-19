@@ -3,7 +3,7 @@
 
   <groupId>com.polopoly.jboss</groupId>
   <artifactId>slim-jboss-4.0.5</artifactId>
-  <version>1.4-SNAPSHOT</version>
+  <version>1.4</version>
   <packaging>pom</packaging>
 
   <name>Slim JBoss 4.0.5.GA</name>
