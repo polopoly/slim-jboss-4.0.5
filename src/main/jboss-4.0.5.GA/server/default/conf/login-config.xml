@@ -46,7 +46,7 @@ $Revision: 43749 $
           <login-module code = "org.jboss.security.auth.spi.DatabaseServerLoginModule"
              flag = "required">
              <module-option name = "unauthenticatedIdentity">guest</module-option>
-             <module-option name = "dsJndiName">java:/jdbc/PolopolyDB</module-option>
+             <module-option name = "dsJndiName">java:/jdbc/MemoryDB</module-option>
              <module-option name = "principalsQuery">SELECT PASSWD FROM JMS_USERS WHERE USERID=?</module-option>
              <module-option name = "rolesQuery">SELECT ROLEID, 'Roles' FROM JMS_ROLES WHERE USERID=?</module-option>
           </login-module>
