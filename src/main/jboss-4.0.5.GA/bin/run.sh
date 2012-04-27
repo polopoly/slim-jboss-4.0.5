@@ -69,7 +69,11 @@ export JBOSS_HOME
 
 # Increase the maximum file descriptors if we can
 if [ "$cygwin" = "false" ]; then
-    MAX_FD_LIMIT=`ulimit -H -n`
+    if [ "$darwin" = "true" ]; then
+      MAX_FD_LIMIT=`sysctl -n kern.maxfilesperproc`
+    else
+      MAX_FD_LIMIT=`ulimit -H -n`
+    fi
     if [ $? -eq 0 ]; then
 	if [ "$MAX_FD" = "maximum" -o "$MAX_FD" = "max" ]; then
 	    # use the system max
