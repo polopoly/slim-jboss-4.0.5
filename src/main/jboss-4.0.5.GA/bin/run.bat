@@ -89,6 +89,9 @@ rem set JAVA_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,address=8787,server=y,su
 rem Setup the java endorsed dirs
 set JBOSS_ENDORSED_DIRS=%JBOSS_HOME%\lib\endorsed
 
+rem Default to 8081 for jboss.web.port
+set JAVA_OPTS=%JAVA_OPTS% -Djboss.web.port=8081
+
 echo ===============================================================================
 echo.
 echo   JBoss Bootstrap Environment
