@@ -92,6 +92,9 @@ set JBOSS_ENDORSED_DIRS=%JBOSS_HOME%\lib\endorsed
 rem Default to 8081 for jboss.web.port
 set JAVA_OPTS=%JAVA_OPTS% -Djboss.web.port=8081
 
+rem Default to 9093 for jboss.jms.port
+set JAVA_OPTS=%JAVA_OPTS% -Djboss.jms.port=9093
+
 echo ===============================================================================
 echo.
 echo   JBoss Bootstrap Environment

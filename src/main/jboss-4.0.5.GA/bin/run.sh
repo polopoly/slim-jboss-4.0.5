@@ -159,6 +159,9 @@ fi
 # Default to 8081 for jboss.web.port
 JAVA_OPTS="$JAVA_OPTS -Djboss.web.port=8081"
 
+# Default to 9093 for jboss.jms.port
+JAVA_OPTS="$JAVA_OPTS -Djboss.jms.port=9093"
+
 # Display our environment
 echo "========================================================================="
 echo ""
