@@ -877,10 +877,10 @@
         <cache-policy>org.jboss.ejb.plugins.LRUEnterpriseContextCachePolicy</cache-policy>
         <cache-policy-conf>
           <min-capacity>50</min-capacity>
-          <max-capacity>1000000</max-capacity>
-          <overager-period>300</overager-period>
-          <max-bean-age>600</max-bean-age>
-          <resizer-period>400</resizer-period>
+          <max-capacity>30000</max-capacity>
+          <overager-period>600</overager-period>
+          <max-bean-age>86400</max-bean-age>
+          <resizer-period>3600</resizer-period>
           <max-cache-miss-period>60</max-cache-miss-period>
           <min-cache-miss-period>1</min-cache-miss-period>
           <cache-load-factor>0.75</cache-load-factor>
@@ -920,10 +920,10 @@
         <cache-policy>org.jboss.ejb.plugins.LRUEnterpriseContextCachePolicy</cache-policy>
         <cache-policy-conf>
           <min-capacity>50</min-capacity>
-          <max-capacity>1000000</max-capacity>
-          <overager-period>300</overager-period>
+          <max-capacity>30000</max-capacity>
+          <overager-period>86400</overager-period>
           <max-bean-age>600</max-bean-age>
-          <resizer-period>400</resizer-period>
+          <resizer-period>3600</resizer-period>
           <max-cache-miss-period>60</max-cache-miss-period>
           <min-cache-miss-period>1</min-cache-miss-period>
           <cache-load-factor>0.75</cache-load-factor>
