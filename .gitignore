@@ -3,3 +3,5 @@ derby.log
 log
 work
 *~
+.idea
+*.iml
