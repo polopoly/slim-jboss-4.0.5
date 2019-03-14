@@ -89,11 +89,13 @@ rem set JAVA_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,address=8787,server=y,su
 rem Setup the java endorsed dirs
 set JBOSS_ENDORSED_DIRS=%JBOSS_HOME%\lib\endorsed
 
-rem Default to 8081 for jboss.web.port
-set JAVA_OPTS=%JAVA_OPTS% -Djboss.web.port=8081
+rem Default to 8081 for jboss.web.port if not set
+echo %JAVA_OPTS% | findstr /C:"\-Djboss.web.port=" > nul
+if errorlevel == 1 (set JAVA_OPTS=%JAVA_OPTS% -Djboss.web.port=8081)
 
-rem Default to 9093 for jboss.jms.port
-set JAVA_OPTS=%JAVA_OPTS% -Djboss.jms.port=9093
+rem Default to 9093 for jboss.jms.port if not set
+echo %JAVA_OPTS% | findstr /C:"\-Djboss.jms.port=" > nul
+if errorlevel == 1 (set JAVA_OPTS=%JAVA_OPTS% -Djboss.jms.port=9093)
 
 echo ===============================================================================
 echo.

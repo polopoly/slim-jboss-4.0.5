@@ -156,11 +156,17 @@ if $cygwin; then
     JBOSS_ENDORSED_DIRS=`cygpath --path --windows "$JBOSS_ENDORSED_DIRS"`
 fi
 
-# Default to 8081 for jboss.web.port
-JAVA_OPTS="$JAVA_OPTS -Djboss.web.port=8081"
+# Default to 8081 for jboss.web.port if not set
+WEB_PORT_SET=`echo $JAVA_OPTS | $GREP "\-Djboss.web.port="`
+if [ "x$WEB_PORT_SET" = "x" ]; then
+  JAVA_OPTS="$JAVA_OPTS -Djboss.web.port=8081"
+fi
 
-# Default to 9093 for jboss.jms.port
-JAVA_OPTS="$JAVA_OPTS -Djboss.jms.port=9093"
+# Default to 9093 for jboss.jms.port if not set
+JMS_PORT_SET=`echo $JAVA_OPTS | $GREP "\-Djboss.jms.port="`
+if [ "x$JMS_PORT_SET" = "x" ]; then
+  JAVA_OPTS="$JAVA_OPTS -Djboss.jms.port=9093"
+fi
 
 # Display our environment
 echo "========================================================================="
