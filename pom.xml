@@ -3,7 +3,7 @@
 
   <groupId>com.polopoly.jboss</groupId>
   <artifactId>slim-jboss-4.0.5</artifactId>
-  <version>1.11-SNAPSHOT</version>
+  <version>1.11</version>
   <packaging>pom</packaging>
 
   <name>Slim JBoss 4.0.5.GA</name>
@@ -21,7 +21,7 @@
   <scm>
     <connection>scm:git:git://github.com/polopoly/slim-jboss-4.0.5.git</connection>
     <developerConnection>scm:git:git@github.com:polopoly/slim-jboss-4.0.5.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>slim-jboss-4.0.5-1.11</tag>
   </scm>
 
   <distributionManagement>
