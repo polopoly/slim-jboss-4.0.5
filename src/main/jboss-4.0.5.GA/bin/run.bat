@@ -13,6 +13,17 @@ if "%OS%" == "Windows_NT" set DIRNAME=%~dp0%
 set PROGNAME=run.bat
 if "%OS%" == "Windows_NT" set PROGNAME=%~nx0%
 
+rem Bypass "Terminate Batch Job" prompt, in this way we are sure the
+rem pid file will be removed
+if [%SELFPARAMS%] == [FIXED_CTRL_C] (
+	rem we can proceed
+) else (
+	rem Run the batch with <NUL and --FIXED_CTRL_C
+	set SELFPARAMS=FIXED_CTRL_C
+	call <NUL %0 %*
+	GOTO :EOF
+)
+
 rem Read all command line arguments
 
 REM
