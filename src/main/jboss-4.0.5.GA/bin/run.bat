@@ -123,9 +123,16 @@ echo.
 echo ===============================================================================
 echo.
 
+set JBOSS_LOCK_DIR=%JBOSS_HOME%\server\default\tmp
+set JBOSS_LOCK_FILE=%JBOSS_LOCK_DIR%\run.pid
+if not exist %JBOSS_LOCK_DIR% mkdir %JBOSS_LOCK_DIR%
+type nul >> %JBOSS_LOCK_FILE%
+
 :RESTART
 "%JAVA%" %JAVA_OPTS% "-Djava.endorsed.dirs=%JBOSS_ENDORSED_DIRS%" -classpath "%JBOSS_CLASSPATH%" org.jboss.Main %*
 if ERRORLEVEL 10 goto RESTART
+
+del %JBOSS_LOCK_FILE%
 
 :END
 if "%NOPAUSE%" == "" pause
