@@ -195,6 +195,7 @@ while true; do
       function cleanup {
           if [ -e $JBOSS_PID_FILE ]; then
               echo "Removing ${JBOSS_PID_FILE}"
+              rm ${JBOSS_PID_FILE}
           fi
       }
 
