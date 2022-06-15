@@ -188,10 +188,14 @@ while true; do
    if [ "x$LAUNCH_JBOSS_IN_BACKGROUND" = "x" ]; then
 
       JBOSS_PID="$$"
-      JBOSS_PID_FILE=${JBOSS_HOME}/server/default/tmp/run.pid
+      JBOSS_PID_DIR=${JBOSS_HOME}/server/default/tmp
+      JBOSS_PID_FILE=${JBOSS_PID_DIR}/run.pid
+      if [ ! -e "${JBOSS_PID_DIR}" ]; then
+          mkdir -p "${JBOSS_PID_DIR}"
+      fi
       echo "${JBOSS_PID}" > ${JBOSS_PID_FILE}
       echo "Process PID ${JBOSS_PID} written to ${JBOSS_PID_FILE}"
-
+      
       function cleanup {
           if [ -e $JBOSS_PID_FILE ]; then
               echo "Removing ${JBOSS_PID_FILE}"
