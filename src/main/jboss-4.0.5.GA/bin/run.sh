@@ -196,15 +196,17 @@ while true; do
       echo "${JBOSS_PID}" > ${JBOSS_PID_FILE}
       echo "Process PID ${JBOSS_PID} written to ${JBOSS_PID_FILE}"
       
-      function cleanup {
+      cleanup() {
           if [ -e $JBOSS_PID_FILE ]; then
               echo "Removing ${JBOSS_PID_FILE}"
               rm ${JBOSS_PID_FILE}
           fi
       }
 
-      trap cleanup EXIT
-      trap cleanup SIGQUIT
+      trap cleanup HUP
+      trap cleanup INT
+      trap cleanup QUIT
+      trap cleanup TERM
 
       # Execute the JVM in the foreground
       "$JAVA" $JAVA_OPTS \
