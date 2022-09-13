@@ -195,8 +195,9 @@ while true; do
       fi
       echo "${JBOSS_PID}" > ${JBOSS_PID_FILE}
       echo "Process PID ${JBOSS_PID} written to ${JBOSS_PID_FILE}"
-      
+
       cleanup() {
+          echo "JBoss cleanup"
           if [ -e $JBOSS_PID_FILE ]; then
               echo "Removing ${JBOSS_PID_FILE}"
               rm ${JBOSS_PID_FILE}
@@ -214,6 +215,11 @@ while true; do
          -classpath "$JBOSS_CLASSPATH" \
          org.jboss.Main "$@"
       JBOSS_STATUS=$?
+
+      echo "JBoss exited with status $JBOSS_STATUS"
+      cleanup
+
+      exit ${JBOSS_STATUS}
    else
       # Execute the JVM in the background
       "$JAVA" $JAVA_OPTS \
